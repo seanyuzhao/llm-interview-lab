@@ -19,5 +19,10 @@ assert len({x['title'] for x in q})==519
 assert len({x['category'] for x in q})==28
 assert all(x.get('html') and x.get('markdown') and x.get('text') for x in q)
 assert len(f)==12,len(f)
-assert 'localStorage' in (root/'assets/app.js').read_text(encoding='utf-8')
+app=(root/'assets/app.js').read_text(encoding='utf-8')
+assert 'localStorage' in app
+assert '150 问' not in app
+assert 'Agentic RL 与 Environment Scaling' not in app
+assert {x['catName'] for x in q if x['category']=='V'}=={'Agentic RL 进阶与实践'}
+assert 'Agentic RL 进阶与实践（27 题）' in (root/'notes/面试题库_519问_完整答案.md').read_text(encoding='utf-8')
 print('PASS:',len(q),'questions',len({x['category'] for x in q}),'modules',len(f),'formulas')

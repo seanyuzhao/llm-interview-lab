@@ -59,14 +59,14 @@ LLM Interview Lab 不只是题目清单，而是把**模型基础 → 预训练�
 | **04 · 基模技术报告** | 大模型技术报告精读；现代基模架构与报告前沿 |
 | **05 · 训练与推理工程** | 微调与训练优化；推理部署与性能；分布式训练与性能工程；后训练故障诊断与实验复现 |
 | **06 · RLHF / RLVR 算法** | 后训练数学基础；GRPO / DAPO / GSPO；强化学习数学与策略优化进阶；奖励建模与偏好对齐；后训练系统工程 |
-| **07 · Agentic RL 与蒸馏** | Agentic RL；Agentic RL 与 Environment Scaling；检索增强、工具调用与知识系统；同策略与多教师蒸馏 |
+| **07 · Agentic RL 与蒸馏** | Agentic RL；Agentic RL 进阶与实践；检索增强、工具调用与知识系统；同策略与多教师蒸馏 |
 | **08 · 评测与项目实战** | 评测、安全与研究方法；项目深挖与手写代码；算法代码与系统设计；工程编程与架构设计面试 |
 
 部分重点主题：
 
 - **模型基础：** Attention、RoPE、GQA、MoE、MLA、Tokenizer、Scaling Law、预训练目标与数据治理。
 - **后训练：** SFT、Reward Modeling、RLHF、RLVR、DPO、PPO、GRPO、DAPO、GSPO、KL、优势估计与采样策略。
-- **蒸馏与 Agent：** On-Policy Distillation、多教师蒸馏、工具调用、轨迹、奖励归因、Environment Scaling。
+- **蒸馏与 Agent：** On-Policy Distillation、多教师蒸馏、工具调用与轨迹、奖励设计、课程学习及 Agent 评测。
 - **多模态：** Vision Encoder、视觉 Token、图文对齐、视频 / 音频、多模态训练与推理。
 - **工程实践：** LoRA / QLoRA、ZeRO、混合精度、训练显存、KV Cache、FlashAttention、vLLM、吞吐与延迟。
 - **模型报告：** 结合代表性基模论文与技术报告，理解架构选择及训练设计背后的动机。
