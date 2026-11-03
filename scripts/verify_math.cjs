@@ -17,9 +17,9 @@ run("data/math_patches.js");
 run("data/math_patches_extra.js");
 const questions=w.LLM_QUESTIONS;
 const byCat=new Map(questions.map(q=>[q.category,q]));
-w.LLM_QUESTION_ADDITIONS.forEach(([category,level,title,answer],i)=>{
+w.LLM_QUESTION_ADDITIONS.forEach(([category,level,title,answer,follow],i)=>{
   assert(byCat.has(category),"Unknown category in extension");
-  questions.push({n:520+i,title,category,level,html:"<p><strong>参考答案：</strong>"+format(answer)+"</p>",markdown:"**参考答案：**"+answer});
+  questions.push({n:520+i,title,category,level,html:"<p><strong>参考答案：</strong>"+format(answer)+"</p><p><strong>常见追问：</strong>"+format(follow)+"</p>",markdown:"**参考答案：**"+answer+"\n\n**常见追问：**"+follow});
 });
 for(const part of ["001_075","076_150","151_240","241_330","331_419","420_519","520_591"])run("data/followups_"+part+".js");
 for(const q of questions){
