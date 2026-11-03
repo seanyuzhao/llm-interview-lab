@@ -11,3 +11,16 @@ body.night{--bg:#0e1725;--surface:#18283a;--surface2:#18283a;--ink:#edf5ff;--mut
 
 /* Follow-up Q&A, distinct from the main answer. */
 .followup-block{margin-top:18px;padding:15px 18px;border:1px solid #cfe4e0;background:#f1faf8;border-radius:12px}.followup-block p{margin:0 0 8px}.followup-block p:last-child{margin:0}.followup-block .followup-answer{padding-top:9px;border-top:1px dashed #c9dcd7}.followup-block .followup-answer strong{color:#087f78}body.night .followup-block{background:#18353b;border-color:#365a5c}body.night .followup-block .followup-answer{border-color:#365a5c}body.night .followup-block .followup-answer strong{color:#75d2cb}
+
+/* KaTeX layouts for long equations, question stems and small screens. */
+.q-title-btn .katex,.quiz-question h2 .katex{font-size:1.05em}
+.answer-body .katex-display,.quiz-answer .katex-display,
+.followup-block .katex-display,.formula-tex .katex-display{
+  max-width:100%;overflow-x:auto;overflow-y:hidden;padding:.35rem 0;margin:.8rem 0
+}
+.formula-tex .katex{font-size:1.04em}
+.katex-display>.katex{white-space:nowrap}
+@media(max-width:640px){
+  .answer-body .katex-display,.quiz-answer .katex-display,
+  .formula-tex .katex-display{font-size:.92em}
+}
