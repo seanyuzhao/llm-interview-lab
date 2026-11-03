@@ -30,6 +30,29 @@
       catch(err){console.warn("Keeping original SVG for Q"+q.n,err);return original;}
     });
   }
+  // Reviewed plain-text equations are annotated only after the old MathJax
+  // SVG restoration, so the original math source ordering stays intact.
+  const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+  let annotated=0;
+  const missed=[];
+  const byId=new Map((window.LLM_QUESTIONS||[]).map(q=>[q.n,q]));
+  for(const [id,source,tex] of window.LLM_MATH_PATCHES||[]){
+    const q=byId.get(id);
+    if(!q){missed.push({id,source,reason:"missing question"});continue;}
+    const escaped=escapeHtml(source);
+    const match=q.html.includes(source)?source:q.html.includes(escaped)?escaped:null;
+    if(!match){missed.push({id,source,reason:"formula text not found"});continue;}
+    const delimiter="\\("+tex+"\\)";
+    q.html=q.html.split(match).join(delimiter);
+    q.markdown=q.markdown.split(source).join(delimiter);
+    q.hasMath=true;
+    annotated++;
+  }
+  if(missed.length)console.warn("Unmatched legacy equation annotations",missed);
+  console.info("Annotated",annotated,"previously unformatted equations.");
+
   for(const f of window.LLM_FORMULAS||[]){
     try {f.html=render(f.tex,true);}
     catch(err){console.warn("Keeping existing formula card",f.title,err);}
