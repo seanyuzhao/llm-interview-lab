@@ -36,7 +36,7 @@ for(const q of questions){
   q.markdown+="\n\n**常见追问：**"+follow+"\n\n**追问解答：**"+answer;
 }
 assert(questions.length===591,"Question count changed");
-const liveSvgCount=questions.reduce((n,q)=>n+(q.html.match(/<mjx-container\\b/g)||[]).length,0);
+const liveSvgCount=questions.reduce((n,q)=>n+(q.html.match(/<mjx-container\b/g)||[]).length,0);
 const total=w.LLM_MATH_PATCHES.length+w.LLM_MATH_PATCHES_EXTRA.length;
 assert(total>=190,"Insufficient math annotations");
 run("assets/math.js");
