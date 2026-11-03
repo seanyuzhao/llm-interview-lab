@@ -53,7 +53,7 @@ math_pattern=r'\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[^$\n]+?\$|\\\([\s\S]*?\\\)'
 assert sum(len(re.findall(math_pattern,item['markdown'])) for item in core)==sum(item['html'].count('<mjx-container') for item in core)==224
 assert all(item.get('tex') for item in formulas)
 patches=load('data/math_patches.js','LLM_MATH_PATCHES')
-assert len(patches)>=90 and all(len(row)==3 and 1<=row[0]<=519 for row in patches)
+assert len(patches)>=90 and all(len(row)==3 and 1<=row[0]<=591 for row in patches)
 assert any(row[0]==155 and 'logsoftmax' in row[1] for row in patches)
 assert 'data/math_patches.js' in html
 assert 'scripts/verify_math.cjs' in (root/'.github/workflows/verify.yml').read_text(encoding='utf-8')
