@@ -20,5 +20,6 @@ jobs:
       - name: Check scripts
         run: |
           node --check assets/app.js
+          node --check assets/math.js
           node --check data/questions.js
           node --check data/formulas.js
