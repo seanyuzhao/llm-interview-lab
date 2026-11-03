@@ -4,15 +4,17 @@
 
 ### 从 Transformer 到 Agentic RL，一站式准备大模型算法面试
 
-**519 道完整问答 · 28 个知识模块 · 12 张公式卡片**
+**591 道完整问答 · 28 个知识模块 · 12 张公式卡片**
+
+**本次扩充：新增 72 道进阶问答，为 96 道核心题补充进阶拆解，保留原有 Q1–Q519 题号及本地学习记录。**
 
 面向大模型算法、后训练（Post-training）、多模态与 Agentic RL 方向的系统化面试知识库。
 
-[**🚀 在线打开题库**](https://seanyuzhao.github.io/llm-interview-lab/) · [**📚 阅读 Markdown 全集**](./notes/面试题库_519问_完整答案.md) · [**🛠️ 查看自动部署**](./actions/workflows/deploy-pages.yml)
+[**🚀 在线打开题库**](https://seanyuzhao.github.io/llm-interview-lab/) · [**📚 阅读 Markdown 全集**](./notes/面试题库_591问_完整答案.md) · [**🛠️ 查看自动部署**](./actions/workflows/deploy-pages.yml)
 
 ![GitHub Pages](https://github.com/seanyuzhao/llm-interview-lab/actions/workflows/deploy-pages.yml/badge.svg)
 ![Content verification](https://github.com/seanyuzhao/llm-interview-lab/actions/workflows/verify.yml/badge.svg)
-![Questions](https://img.shields.io/badge/questions-519-226c90)
+![Questions](https://img.shields.io/badge/questions-591-226c90)
 ![Modules](https://img.shields.io/badge/modules-28-487a67)
 ![Hosting](https://img.shields.io/badge/hosting-GitHub%20Pages-222222)
 
@@ -36,7 +38,7 @@ LLM Interview Lab 不只是题目清单，而是把**模型基础 → 预训练�
 
 | 功能 | 说明 |
 | --- | --- |
-| 📚 **519 道完整问答** | 涵盖基础原理、数学推导、训练方法、工程实践与项目追问 |
+| 📚 **591 道完整问答** | 涵盖基础原理、数学推导、训练方法、工程实践与项目追问 |
 | 🧭 **28 个知识模块** | 按主题组织，支持模块筛选与掌握进度统计 |
 | 🔎 **全文搜索** | 可根据题目、参考答案、知识模块及题号搜索 |
 | 🏷️ **难度与状态筛选** | 基础 / 进阶 / 挑战；全部、待复习、仅收藏、尚未掌握 |
@@ -104,7 +106,7 @@ LLM Interview Lab 不只是题目清单，而是把**模型基础 → 预训练�
 
 ## 🔐 学习进度与隐私
 
-本项目**没有用户账号、云数据库或跨设备自动同步功能**。
+本项目**没有用户账号、云数据库或跨设备自动同步功能**。新增题目不会改变原有 Q1–Q519 的编号，已经保存的学习状态仍按原编号读取。
 
 - 已掌握、待复习、收藏、个人备注及主题选择会写入当前浏览器的 `localStorage`（键名：`llmInterviewLab-v1`）。
 - **关闭网页、退出浏览器或重启设备后**，通常仍能在同一浏览器及同一站点下继续学习。
@@ -139,10 +141,12 @@ llm-interview-lab/
 │   ├── app.js                  # 搜索、题库交互、复习记录与自测
 │   └── style.css               # 页面样式与响应式布局
 ├── data/
-│   ├── questions.js            # 519 道结构化题目与答案
+│   ├── questions.js            # 原有 519 道题（题号保持不变）
+│   ├── questions_extension.js  # 新增 72 道题
+│   ├── core_addenda.js         # 96 道核心题进阶解析
 │   └── formulas.js             # 12 张公式卡片
 ├── notes/
-│   └── 面试题库_519问_完整答案.md  # Markdown 完整版
+│   └── 面试题库_591问_完整答案.md  # Markdown 完整版
 ├── scripts/
 │   └── verify_site.py          # 数据一致性检查
 └── .github/workflows/
@@ -193,3 +197,4 @@ node --check data/formulas.js
 <sub>LLM Interview Lab · 2026 Edition</sub>
 
 </div>
+

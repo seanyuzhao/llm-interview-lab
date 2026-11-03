@@ -10,6 +10,27 @@ const SOURCES={foundation:[
  ['PPO','Clipped Policy Optimization','https://arxiv.org/abs/1707.06347'],['DeepSeekMath / GRPO','Group Relative Policy Optimization','https://arxiv.org/abs/2402.03300'],['DAPO','大规模 RL 训练策略','https://dapo-sia.github.io/'],['GSPO','Sequence-level Policy Optimization','https://arxiv.org/abs/2507.18071'],['verl 官方文档','GRPO 算法与配置','https://verl.readthedocs.io/en/latest/algo/grpo.html'],['TRL GRPO Trainer','框架级训练参数','https://huggingface.co/docs/trl/grpo_trainer'],['On-Policy Distillation','学生状态分布上的蒸馏','https://thinkingmachines.ai/blog/on-policy-distillation/'],['DPO','Direct Preference Optimization','https://arxiv.org/abs/2305.18290'],['vLLM 官方文档','PagedAttention、批处理和 KV Cache','https://docs.vllm.cc/en/latest/'],['ZeRO','优化器状态与参数分片','https://arxiv.org/abs/1910.02054'],['Qwen3-VL Technical Report','Interleaved MRoPE / DeepStack','https://arxiv.org/abs/2511.21631'],['Qwen3.5','原生多模态与混合注意力','https://qwen.ai/blog?id=qwen3.5'],['DeepSeek-V4','2026 技术报告与百万上下文','https://deepseek.com/en/news/v4-preview/'],['Kimi K2.5','视觉 Agent 与 Agent Swarm','https://arxiv.org/abs/2602.02276'],['MiMo-V2.6','Environment/Grader/RL Compute Scaling','https://arxiv.org/abs/2610.11959']]};
 const $=id=>document.getElementById(id);
 const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Append new questions without altering the original 519 IDs or the localStorage schema.
+const formatExt=s=>escapeHtml(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\n/g,'<br>');
+const baseMeta=Object.fromEntries(QUESTIONS.map(q=>[q.category,q]));
+for(const [i,[category,level,title,answer,follow]] of (window.LLM_QUESTION_ADDITIONS||[]).entries()){
+ const template=baseMeta[category];if(!template)throw Error('Unknown category '+category);
+ QUESTIONS.push({n:520+i,title,category,
+  html:'<p><strong>参考答案：</strong>'+formatExt(answer)+'</p>\n<p><strong>常见追问：</strong>'+formatExt(follow)+'</p>\n',
+  text:'参考答案：'+answer+' 常见追问：'+follow,
+  summary:'参考答案：'+answer.slice(0,140),
+  hasCode:/PyTorch|代码|伪代码|mask|函数调用/i.test(title),
+  hasMath:/[=∑∂≤≥×^πσ]/.test(answer),
+  level,catName:template.catName,group:template.group,chapter:template.chapter,catShort:template.catShort,codeLines:0,
+  markdown:'**参考答案：**'+answer+'\n\n**常见追问：**'+follow});
+}
+for(const question of QUESTIONS){
+ const extra=(window.LLM_CORE_ADDENDA||{})[question.n];
+ if(extra){question.html+='<p><strong>进阶拆解：</strong>'+formatExt(extra)+'</p>\n';
+  question.text+=' 进阶拆解：'+extra;
+  question.markdown+='\n\n**进阶拆解：**'+extra;}
+}
+
 let memory={mastered:[],review:[],saved:[],notes:{},theme:'light'};
 try{const old=JSON.parse(localStorage.getItem('llmInterviewLab-v1')||'{}'); if(old&&typeof old==='object')memory={...memory,...old}}catch(e){}
 for(const x of ['mastered','review','saved'])if(!Array.isArray(memory[x])) memory[x]=[];

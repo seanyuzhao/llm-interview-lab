@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="覆盖 Transformer、大模型基础、预训练、后训练 RL、OPD、Agentic RL、分布式工程和推理部署的 519 道大厂算法面试题与详细答案。">
+<meta name="description" content="覆盖 Transformer、大模型基础、预训练、后训练 RL、OPD、Agentic RL、分布式工程和推理部署的 591 道大厂算法面试题与详细答案。">
 <meta name="referrer" content="no-referrer">
 <title>LLM Interview Lab · 大模型后训练面试知识库</title>
 <link rel="stylesheet" href="assets/style.css">
@@ -15,7 +15,7 @@
 <aside class="sidebar" id="sidebar">
  <div class="brand"><div class="brand-mark">∑</div><div><strong>LLM Interview Lab</strong><small>INTERVIEW KNOWLEDGE BASE</small></div></div>
  <div class="sidebar-scroll" id="sidebarNav"></div>
- <div class="sidebar-bottom">独立整理 · <b>519 道完整问答</b><br>个人学习记录仅保存在当前浏览器</div>
+ <div class="sidebar-bottom">独立整理 · <b>591 道完整问答</b><br>个人学习记录仅保存在当前浏览器</div>
 </aside>
 <main class="main">
  <header class="topbar">
@@ -26,8 +26,8 @@
  </header>
  <div class="content">
   <section id="homeView" class="view">
-   <div class="hero"><div class="eyebrow">2026 EDITION · POST-TRAINING INTERVIEW PREP</div><h1>从 Transformer 到 Agentic RL<br>系统掌握大模型算法面试</h1><p>不是零散背概念，而是把架构、训练、强化学习、推理和代码串成完整知识体系。每一题都附有参考答案、公式或关键追问。</p><div class="hero-actions"><button class="btn btn-primary" data-go="library">进入 519 题知识库 <span>→</span></button><button class="btn btn-outline" style="background:#ffffff18;border-color:#ffffff55;color:white" data-go="quiz">开始随机自测</button></div></div>
-   <div class="stats"><div class="stat"><span class="stat-symbol">▦</span><div class="stat-num" id="countTotal">519</div><div class="stat-label">完整参考答案</div></div><div class="stat"><span class="stat-symbol">✓</span><div class="stat-num" id="countMastered">0</div><div class="stat-label">已掌握题目</div></div><div class="stat"><span class="stat-symbol">↺</span><div class="stat-num" id="countReview">0</div><div class="stat-label">标记待复习</div></div><div class="stat"><span class="stat-symbol">☆</span><div class="stat-num" id="countSaved">0</div><div class="stat-label">重点收藏</div></div></div>
+   <div class="hero"><div class="eyebrow">2026 EDITION · POST-TRAINING INTERVIEW PREP</div><h1>从 Transformer 到 Agentic RL<br>系统掌握大模型算法面试</h1><p>不是零散背概念，而是把架构、训练、强化学习、推理和代码串成完整知识体系。每一题都附有参考答案、公式或关键追问。</p><div class="hero-actions"><button class="btn btn-primary" data-go="library">进入 591 题知识库 <span>→</span></button><button class="btn btn-outline" style="background:#ffffff18;border-color:#ffffff55;color:white" data-go="quiz">开始随机自测</button></div></div>
+   <div class="stats"><div class="stat"><span class="stat-symbol">▦</span><div class="stat-num" id="countTotal">591</div><div class="stat-label">完整参考答案</div></div><div class="stat"><span class="stat-symbol">✓</span><div class="stat-num" id="countMastered">0</div><div class="stat-label">已掌握题目</div></div><div class="stat"><span class="stat-symbol">↺</span><div class="stat-num" id="countReview">0</div><div class="stat-label">标记待复习</div></div><div class="stat"><span class="stat-symbol">☆</span><div class="stat-num" id="countSaved">0</div><div class="stat-label">重点收藏</div></div></div>
    <div class="section-head"><div><h2>知识模块</h2><p>推荐先完成模型基础，再进入后训练与个人项目专题</p></div><button class="mini-link" data-go="library">查看全部题目 →</button></div><div class="modules" id="moduleGrid"></div>
    <div class="home-lower"><div class="panel"><h3>14 天冲刺路线</h3><p>按“基础 → 算法 → 工程 → 项目 → 模拟”的顺序复习；可根据已有基础加速。</p><div id="roadmap"></div></div><div class="panel"><h3>高频辨析 · 最容易答错的点</h3><ul class="mistake-list"><li>标准 GRPO 不训练 critic，也不使用 PPO 的 GAE。</li><li>FlashAttention 优化 IO，不将全注意力算量直接变为线性。</li><li>GQA 减少 KV 头数，不代表 decode 延迟同比例缩短。</li><li>OPD 是在学生自己的状态/前缀分布上蒸馏。</li><li>Reward 上升不等于真实准确率或用户价值必然提升。</li><li>实际训练显存远大于 BF16 权重本身。</li></ul><button class="btn btn-soft btn-sm" data-go="quiz">用随机问答检查薄弱环节 ↗</button></div></div>
   </section>
@@ -45,8 +45,10 @@
 </div>
 <div class="toast" id="toast"></div>
 <div class="help-dialog" id="helpDialog" hidden><div class="dialog-box"><div style="display:flex;justify-content:space-between;align-items:center"><h3>快捷键与复习记录</h3><button class="tool-icon" id="helpClose" aria-label="关闭">×</button></div><p class="small-note">在本地浏览器中打开网站后，复习状态与备注会自动保存。更换浏览器或设备可通过 JSON 文件迁移。</p><p class="small-note"><span class="kbd">/</span> 聚焦搜索　<span class="kbd">Esc</span> 关闭弹窗</p><p class="small-note"><span class="kbd">点击问题</span> 展开/收起答案　<span class="kbd">★</span> 收藏</p><div class="toolline"><button class="btn btn-primary btn-sm" id="exportProgress2">导出学习进度</button><button class="btn btn-outline btn-sm" id="importProgress2">导入进度</button></div></div></div>
-<script src="data/questions.js"></script>
-<script src="data/formulas.js"></script>
-<script src="assets/app.js"></script>
+<script src="data/questions.js?v=20261103-591"></script>
+<script src="data/questions_extension.js?v=20261103-591"></script>
+<script src="data/core_addenda.js?v=20261103-591"></script>
+<script src="data/formulas.js?v=20261103-591"></script>
+<script src="assets/app.js?v=20261103-591"></script>
 </body>
 </html>
