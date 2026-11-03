@@ -21,5 +21,7 @@ jobs:
         run: |
           node --check assets/app.js
           node --check assets/math.js
+          node --check data/math_patches.js
+          node scripts/verify_math.cjs
           node --check data/questions.js
           node --check data/formulas.js
