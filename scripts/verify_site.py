@@ -3,7 +3,7 @@ from pathlib import Path
 import json,re
 root=Path(__file__).resolve().parents[1]
 html=(root/'index.html').read_text(encoding='utf-8')
-paths=['assets/style.css','assets/app.js','assets/math.js','data/math_patches.js','data/questions.js','data/questions_extension.js','data/core_addenda.js','data/formulas.js'] + ['data/followups_'+s+'.js' for s in ['001_075','076_150','151_240','241_330','331_419','420_519','520_591']]
+paths=['assets/style.css','assets/app.js','assets/math.js','data/math_patches.js','data/math_patches_extra.js','data/questions.js','data/questions_extension.js','data/core_addenda.js','data/formulas.js'] + ['data/followups_'+s+'.js' for s in ['001_075','076_150','151_240','241_330','331_419','420_519','520_591']]
 for path in paths:
  assert (root/path).is_file(),path
  assert path in html,(path,'missing script/link')
@@ -44,7 +44,7 @@ assert notes.count('**进阶拆解：**')==96
 assert notes.count('**常见追问：**')==591
 assert notes.count('**追问解答：**')==591
 assert 'String(q.displayNo)' in app and 'a.displayNo-b.displayNo' in app
-assert 'v=20261103-591-math3' in html
+assert 'v=20261103-591-math4' in html
 assert 'katex@0.19.1' in html and 'auto-render.min.js' in html
 assert 'renderInterviewMath' in app
 math_js=(root/'assets/math.js').read_text(encoding='utf-8')
@@ -56,5 +56,9 @@ patches=load('data/math_patches.js','LLM_MATH_PATCHES')
 assert len(patches)>=90 and all(len(row)==3 and 1<=row[0]<=591 for row in patches)
 assert any(row[0]==155 and 'logsoftmax' in row[1] for row in patches)
 assert 'data/math_patches.js' in html
+assert 'data/math_patches_extra.js' in html
+patches_extra=load('data/math_patches_extra.js','LLM_MATH_PATCHES_EXTRA')
+assert len(patches)+len(patches_extra)>=190
+assert all(len(row)==3 and 1<=row[0]<=591 for row in patches_extra)
 assert 'scripts/verify_math.cjs' in (root/'.github/workflows/verify.yml').read_text(encoding='utf-8')
 print('PASS: 591 consecutively numbered questions; 591 follow-up answers; 96 enriched; 28 modules; 12 formulas; KaTeX initialized')
