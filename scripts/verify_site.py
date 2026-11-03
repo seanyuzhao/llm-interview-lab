@@ -44,7 +44,7 @@ assert notes.count('**进阶拆解：**')==96
 assert notes.count('**常见追问：**')==591
 assert notes.count('**追问解答：**')==591
 assert 'String(q.displayNo)' in app and 'a.displayNo-b.displayNo' in app
-assert 'v=20261103-591-math2' in html
+assert 'v=20261103-591-math3' in html
 assert 'katex@0.19.1' in html and 'auto-render.min.js' in html
 assert 'renderInterviewMath' in app
 math_js=(root/'assets/math.js').read_text(encoding='utf-8')
@@ -53,7 +53,7 @@ math_pattern=r'\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\$[^$\n]+?\$|\\\([\s\S]*?\\\)'
 assert sum(len(re.findall(math_pattern,item['markdown'])) for item in core)==sum(item['html'].count('<mjx-container') for item in core)==224
 assert all(item.get('tex') for item in formulas)
 patches=load('data/math_patches.js','LLM_MATH_PATCHES')
-assert len(patches)>=60 and all(len(row)==3 and 1<=row[0]<=519 for row in patches)
+assert len(patches)>=90 and all(len(row)==3 and 1<=row[0]<=519 for row in patches)
 assert any(row[0]==155 and 'logsoftmax' in row[1] for row in patches)
 assert 'data/math_patches.js' in html
 assert 'scripts/verify_math.cjs' in (root/'.github/workflows/verify.yml').read_text(encoding='utf-8')
