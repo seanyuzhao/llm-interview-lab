@@ -36,6 +36,7 @@ for(const q of questions){
   q.markdown+="\n\n**常见追问：**"+follow+"\n\n**追问解答：**"+answer;
 }
 assert(questions.length===591,"Question count changed");
+const liveSvgCount=questions.reduce((n,q)=>n+(q.html.match(/<mjx-container\\b/g)||[]).length,0);
 const total=w.LLM_MATH_PATCHES.length+w.LLM_MATH_PATCHES_EXTRA.length;
 assert(total>=190,"Insufficient math annotations");
 run("assets/math.js");
@@ -54,5 +55,5 @@ assert(get(337).title.includes("\\(\\lambda\\)"),"GAE title not typeset");
 assert(get(539).title.includes("\\(\\beta\\)"),"DPO title not typeset");
 assert(get(140).html.includes("<pre><code"),"Code block damaged");
 const converted=info.find(row=>row[0]==="KaTeX ready; converted");
-assert(converted&&converted[1]===224,"Legacy MathJax conversion changed");
-console.log("PASS: 591 questions, "+total+" annotations, 224 converted SVG formulas, complete Q&A, math headings, zero unmatched patches");
+assert(converted&&converted[1]===liveSvgCount,"Legacy MathJax conversion count mismatched live question cards");
+console.log("PASS: 591 questions, "+total+" annotations, "+liveSvgCount+" converted live SVG formulas, complete Q&A, math headings, zero unmatched patches");
