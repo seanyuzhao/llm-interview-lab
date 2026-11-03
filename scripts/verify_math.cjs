@@ -10,15 +10,29 @@ context.document={querySelector(){return null}};
 vm.createContext(context);
 function exec(relative){vm.runInContext(fs.readFileSync(path.join(root,relative),"utf8"),context,{filename:relative,timeout:12000});}
 exec("data/questions.js");
+exec("data/questions_extension.js");
 exec("data/math_patches.js");
-exec("data/followups_151_240.js");
+const baseMeta=new Map(context.window.LLM_QUESTIONS.map(q=>[q.category,q]));
+context.window.LLM_QUESTION_ADDITIONS.forEach(([category,level,title,answer,follow],i)=>{
+  const template=baseMeta.get(category);
+  context.window.LLM_QUESTIONS.push({
+    n:520+i,title,category,level,html:"<p>"+answer+"</p>",
+    markdown:answer,catName:template.catName
+  });
+});
+for(const part of ["001_075","076_150","151_240","241_330","331_419","420_519","520_591"])
+  exec("data/followups_"+part+".js");
+for(const q of context.window.LLM_QUESTIONS){
+  const entry=context.window.LLM_FOLLOWUP_BANK[q.n];
+  const answer=typeof entry==="string"?entry:entry?.answer;
+  assert(answer,"Missing follow-up for "+q.n);
+  q.html+="<p>"+answer+"</p>";
+  q.markdown+="\n"+answer;
+}
 const softmax=context.window.LLM_QUESTIONS.find(q=>q.n===155);
-const answer=context.window.LLM_FOLLOWUP_BANK["155"];
-assert(answer&&answer.includes("logsoftmax"),"Missing Q155 follow-up");
-softmax.html+="<div>"+answer+"</div>";
-softmax.markdown+="\n"+answer;
+assert(context.window.LLM_FOLLOWUP_BANK["155"].includes("logsoftmax"),"Missing Q155 follow-up");
 const total=context.window.LLM_MATH_PATCHES.length;
-assert(total>=60,"Missing reviewed equations");
+assert(total>=90,"Missing reviewed equations");
 exec("assets/math.js");
 const missing=logs.find(row=>row[0]==="Unmatched legacy equation annotations");
 assert(!missing,JSON.stringify(missing&&missing[1]));
