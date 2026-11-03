@@ -38,7 +38,11 @@
   let annotated=0;
   const missed=[];
   const byId=new Map((window.LLM_QUESTIONS||[]).map(q=>[q.n,q]));
-  for(const [id,source,tex] of window.LLM_MATH_PATCHES||[]){
+  const reviewedEquations = [
+    ...(window.LLM_MATH_PATCHES||[]),
+    ...(window.LLM_MATH_PATCHES_EXTRA||[])
+  ].sort((a,b)=>b[1].length-a[1].length);
+  for(const [id,source,tex] of reviewedEquations){
     const q=byId.get(id);
     if(!q){missed.push({id,source,reason:"missing question"});continue;}
     const escaped=escapeHtml(source);
@@ -49,6 +53,16 @@
     q.markdown=q.markdown.split(source).join(delimiter);
     q.hasMath=true;
     annotated++;
+  }
+  // Mathematical symbols in question headings must also be typeset.
+  const latexTitles={
+    337:"GAE 的推导和 \\(\\lambda\\) 的作用？",
+    534:"给定两步 TD 残差，如何手算 GAE(\\(\\lambda\\))？",
+    539:"DPO 的 \\(\\beta\\) 如何影响 chosen/rejected margin？"
+  };
+  for(const [id,title] of Object.entries(latexTitles)){
+    const q=byId.get(Number(id));
+    if(q)q.title=title;
   }
   if(missed.length)console.warn("Unmatched legacy equation annotations",missed);
   console.info("Annotated",annotated,"previously unformatted equations.");
