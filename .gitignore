@@ -1,0 +1,9 @@
+.DS_Store
+.env
+.env.*
+*学习进度*.json
+*进度备份*.json
+progress*.json
+backup/
+backups/
+__pycache__/

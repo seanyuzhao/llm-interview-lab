@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="覆盖 Transformer、大模型基础、预训练、后训练 RL、OPD、Agentic RL、分布式工程和推理部署的 519 道大厂算法面试题与详细答案。">
+<meta name="referrer" content="no-referrer">
+<title>LLM Interview Lab · 大模型后训练面试知识库</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="app" id="app">
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<aside class="sidebar" id="sidebar">
+ <div class="brand"><div class="brand-mark">∑</div><div><strong>LLM Interview Lab</strong><small>INTERVIEW KNOWLEDGE BASE</small></div></div>
+ <div class="sidebar-scroll" id="sidebarNav"></div>
+ <div class="sidebar-bottom">独立整理 · <b>519 道完整问答</b><br>本地复习记录，不上传任何数据</div>
+</aside>
+<main class="main">
+ <header class="topbar">
+  <div class="topbar-left"><button class="tool-icon mobile-menu" id="menuBtn" aria-label="打开菜单">☰</button><div class="crumb"><span id="breadcrumb1">学习工作台</span><span class="slash">/</span><span class="detail" id="breadcrumb2">总览</span></div></div>
+  <label class="searchbox"><span class="search-icon">⌕</span><input type="search" id="globalSearch" autocomplete="off" placeholder="搜索 GRPO、RoPE、KV Cache..." aria-label="搜索问题和答案"><span class="keycap">/</span></label>
+  <button class="tool-icon" id="themeToggle" title="切换日间/夜间模式">☾</button>
+  <button class="tool-icon" id="helpToggle" title="快捷键与数据管理">⋯</button>
+ </header>
+ <div class="content">
+  <section id="homeView" class="view">
+   <div class="hero"><div class="eyebrow">2026 EDITION · POST-TRAINING INTERVIEW PREP</div><h1>从 Transformer 到 Agentic RL<br>系统掌握大模型算法面试</h1><p>不是零散背概念，而是把架构、训练、强化学习、推理和代码串成完整知识体系。每一题都附有参考答案、公式或关键追问。</p><div class="hero-actions"><button class="btn btn-primary" data-go="library">进入 519 题知识库 <span>→</span></button><button class="btn btn-outline" style="background:#ffffff18;border-color:#ffffff55;color:white" data-go="quiz">开始随机自测</button></div></div>
+   <div class="stats"><div class="stat"><span class="stat-symbol">▦</span><div class="stat-num" id="countTotal">519</div><div class="stat-label">完整参考答案</div></div><div class="stat"><span class="stat-symbol">✓</span><div class="stat-num" id="countMastered">0</div><div class="stat-label">已掌握题目</div></div><div class="stat"><span class="stat-symbol">↺</span><div class="stat-num" id="countReview">0</div><div class="stat-label">标记待复习</div></div><div class="stat"><span class="stat-symbol">☆</span><div class="stat-num" id="countSaved">0</div><div class="stat-label">重点收藏</div></div></div>
+   <div class="section-head"><div><h2>知识模块</h2><p>推荐先完成模型基础，再进入后训练与个人项目专题</p></div><button class="mini-link" data-go="library">查看全部题目 →</button></div><div class="modules" id="moduleGrid"></div>
+   <div class="home-lower"><div class="panel"><h3>14 天冲刺路线</h3><p>按“基础 → 算法 → 工程 → 项目 → 模拟”的顺序复习；可根据已有基础加速。</p><div id="roadmap"></div></div><div class="panel"><h3>高频辨析 · 最容易答错的点</h3><ul class="mistake-list"><li>标准 GRPO 不训练 critic，也不使用 PPO 的 GAE。</li><li>FlashAttention 优化 IO，不将全注意力算量直接变为线性。</li><li>GQA 减少 KV 头数，不代表 decode 延迟同比例缩短。</li><li>OPD 是在学生自己的状态/前缀分布上蒸馏。</li><li>Reward 上升不等于真实准确率或用户价值必然提升。</li><li>实际训练显存远大于 BF16 权重本身。</li></ul><button class="btn btn-soft btn-sm" data-go="quiz">用随机问答检查薄弱环节 ↗</button></div></div>
+  </section>
+  <section id="libraryView" class="view" hidden>
+   <div class="eyebrow">KNOWLEDGE BASE / 问答题库</div><h1 class="page-title" id="libraryTitle">全部面试题</h1><p class="page-sub" id="librarySubtitle">从基础原理、数学公式到真实训练工程，全覆盖的高频面试问答。</p>
+   <div class="library-tools"><div class="filters"><button class="chip active" data-filter="all">全部题目</button><button class="chip" data-filter="review">待复习</button><button class="chip" data-filter="saved">仅收藏</button><button class="chip" data-filter="unmastered">尚未掌握</button></div><div class="library-right"><select class="select" id="levelSelect" aria-label="题目难度"><option value="all">所有难度</option><option value="基础">基础</option><option value="进阶">进阶</option><option value="挑战">挑战</option></select><button class="btn btn-outline btn-sm" id="randomPick">↗ 随机一题</button></div></div>
+   <p class="result-line" id="resultLine"></p><div class="q-list" id="questionList"></div><div class="more-row" id="moreRow"></div>
+  </section>
+  <section id="quizView" class="view" hidden><div class="eyebrow">ACTIVE RECALL / 主动回忆</div><h1 class="page-title">随机模拟面试</h1><p class="page-sub">先不看答案，口头解释 60–120 秒，再展开参考答案。优先抽取尚未掌握的题目。</p><div class="quiz-layout"><div class="quiz-question" id="quizQuestion"></div><aside class="quiz-sidebar"><h3>自测原则</h3><p>先给结论，再说公式与数据流，最后补充关键边界、失败案例和自己的实践。</p><button class="btn btn-primary" style="width:100%;margin-bottom:10px" id="nextQuiz">下一题 →</button><button class="btn btn-outline" style="width:100%" id="quizOnlyReview">只从待复习题中抽取</button><div class="quiz-history" id="quizStats"></div></aside></div></section>
+  <section id="formulaView" class="view" hidden><div class="eyebrow">FORMULA SHEET / 核心公式</div><h1 class="page-title">公式速查</h1><p class="page-sub">12 张高频公式卡片，均可离线显示，点击“对应题目”阅读推导和面试追问。</p><div class="formula-grid" id="formulaGrid"></div></section>
+  <section id="resourceView" class="view" hidden><div class="eyebrow">STUDY SOURCES / 学习资源</div><h1 class="page-title">原论文与官方资料</h1><p class="page-sub">知识库为面试复习归纳，不是任何公司的逐字真题。学术定义与工程默认值以论文及代码版本为准。</p><div class="section-head"><h2>经典架构与预训练</h2></div><div class="ref-grid" id="refsFoundation"></div><div class="section-head"><h2>后训练、蒸馏与服务系统</h2></div><div class="ref-grid" id="refsTraining"></div><div class="panel" style="margin-top:19px"><h3>使用与准确性说明</h3><p>内容偏向 decoder-only、通用大模型训练和面试沟通。部分数学式是教学简化形式；涉及动态 token 采样、归一化口径、off-policy、截断概率或跨版本框架实现时，必须先确认假设。网页没有联网或用户账户功能，学习状态保存在当前浏览器本地。</p><div class="toolline"><button class="btn btn-outline btn-sm" id="exportProgress">⇩ 导出学习进度</button><button class="btn btn-outline btn-sm" id="importProgress">⇧ 导入学习进度</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></div></section>
+  <footer class="footer">LLM INTERVIEW LAB · 2026-11-03 · 原创知识归纳与本地互动学习 · 公开题库 · 学习记录仅保存在浏览器</footer>
+ </div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<div class="help-dialog" id="helpDialog" hidden><div class="dialog-box"><div style="display:flex;justify-content:space-between;align-items:center"><h3>快捷键与复习记录</h3><button class="tool-icon" id="helpClose" aria-label="关闭">×</button></div><p class="small-note">在本地浏览器中打开网站后，复习状态与备注会自动保存。更换浏览器或设备可通过 JSON 文件迁移。</p><p class="small-note"><span class="kbd">/</span> 聚焦搜索　<span class="kbd">Esc</span> 关闭弹窗</p><p class="small-note"><span class="kbd">点击问题</span> 展开/收起答案　<span class="kbd">★</span> 收藏</p><div class="toolline"><button class="btn btn-primary btn-sm" id="exportProgress2">导出学习进度</button><button class="btn btn-outline btn-sm" id="importProgress2">导入进度</button></div></div></div>
+<script src="data/questions.js"></script>
+<script src="data/formulas.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
